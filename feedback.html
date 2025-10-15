@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IBM-NJ Feedback Collection System</title>
+  <style>
+    /* Reset some styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f8fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 2rem 2.5rem;
+      max-width: 500px;
+      width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #0f62fe; /* IBM Blue */
+      margin-bottom: 1.5rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #333;
+    }
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      padding: 0.6rem 0.8rem;
+      font-size: 1rem;
+      border: 1.5px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s;
+      width: 100%;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #0f62fe;
+      outline: none;
+    }
+    textarea {
+      min-height: 100px;
+    }
+    button {
+      background-color: #0f62fe;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: 700;
+    }
+    button:hover {
+      background-color: #0353e9;
+    }
+    .success-message {
+      text-align: center;
+      color: green;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    /* Responsive tweaks */
+    @media (max-width: 400px) {
+      .container {
+        padding: 1.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IBM-NJ Feedback System</h1>
+    <form id="feedbackForm" novalidate>
+      <label for="name">Full Name <span style="color:red">*</span></label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+      <label for="email">Email Address <span style="color:red">*</span></label>
+      <input type="email" id="email" name="email" placeholder="example@ibm.com" required />
+
+      <label for="department">Department</label>
+      <select id="department" name="department">
+        <option value="">-- Select Department --</option>
+        <option value="engineering">Engineering</option>
+        <option value="sales">Sales</option>
+        <option value="hr">Human Resources</option>
+        <option value="marketing">Marketing</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="rating">Overall Satisfaction <span style="color:red">*</span></label>
+      <select id="rating" name="rating" required>
+        <option value="">-- Select Rating --</option>
+        <option value="5">Excellent</option>
+        <option value="4">Good</option>
+        <option value="3">Average</option>
+        <option value="2">Poor</option>
+        <option value="1">Very Poor</option>
+      </select>
+
+      <label for="comments">Additional Comments</label>
+      <textarea id="comments" name="comments" placeholder="Your feedback here..."></textarea>
+
+      <button type="submit">Submit Feedback</button>
+    </form>
+    <p class="success-message" id="successMessage" style="display:none;">Thank you for your feedback!</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // prevent default submission
+
+      // Simple validation
+      if (!form.name.value.trim()) {
+        alert('Please enter your full name.');
+        form.name.focus();
+        return;
+      }
+      if (!form.email.value.trim()) {
+        alert('Please enter your email address.');
+        form.email.focus();
+        return;
+      }
+      // Basic email regex check
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(form.email.value.trim())) {
+        alert('Please enter a valid email address.');
+        form.email.focus();
+        return;
+      }
+      if (!form.rating.value) {
+        alert('Please select your overall satisfaction rating.');
+        form.rating.focus();
+        return;
+      }
+
+      // Simulate successful submission
+      successMessage.style.display = 'block';
+
+      // Clear the form
+      form.reset();
+
+      // Optionally, hide message after some seconds
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
